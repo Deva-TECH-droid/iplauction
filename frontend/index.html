@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IPL Mega Auction 2025</title>
+  <link rel="stylesheet" href="styles.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;500;700;900&family=Rajdhani:wght@300;500;700&display=swap"
+    rel="stylesheet">
+  <!-- Font Awesome for Icons (simulated via text/unicode for now or CDN if allowed, but strict rules say avoid unless necessary, using unicode/emoji is safer) -->
+</head>
+
+<body>
+
+  <div id="login-screen" class="screen active">
+    <div class="login-container glass-card">
+      <h1 class="logo-text">IPL MEGA AUCTION <span class="highlight">2025</span></h1>
+      <p class="subtitle">Experience the thrill of the hammer</p>
+
+      <form id="login-form">
+        <div class="input-group">
+          <input type="text" id="username" placeholder="Auctioneer Name" required>
+        </div>
+        <div class="input-group">
+          <input type="password" id="password" placeholder="Key (ipl2025)" required>
+        </div>
+        <button type="submit" class="btn-primary glow-btn">ENTER ARENA</button>
+      </form>
+      <div id="login-error" class="error-msg"></div>
+    </div>
+    <div class="bg-animation"></div>
+  </div>
+
+  <!-- Intro Screen -->
+  <div id="intro-screen" class="screen hidden">
+    <div class="intro-content">
+      <div class="cloud-effect"></div>
+      <img src="https://upload.wikimedia.org/wikipedia/en/8/84/Indian_Premier_League_Official_Logo.svg" alt="IPL Logo"
+        class="intro-logo">
+      <h1 class="intro-text">IPL 2026</h1>
+    </div>
+  </div>
+
+  <!-- Retention Screen -->
+  <div id="retention-screen" class="screen hidden">
+    <header class="top-bar glass-panel">
+      <div class="logo-mini">RETENTION PHASE</div>
+      <button id="finish-retention-btn" class="btn-primary">Start Auction >></button>
+    </header>
+    <div class="retention-container">
+      <h2 style="text-align:center; color:white; margin: 20px 0;">Select Players to Retain (Max 2 per Team)</h2>
+      <div class="teams-grid" id="retention-teams-grid">
+        <!-- Teams populated by JS -->
+      </div>
+    </div>
+
+    <!-- Retention Selection Modal -->
+    <div id="retention-modal" class="modal-overlay hidden">
+      <div class="modal-content glass-card">
+        <div class="modal-header">
+          <h2 id="ret-modal-team-name">Team Retentions</h2>
+          <button id="close-ret-modal" class="close-btn">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p class="info-text">Select players from previous season roster. (Budget will be deducted)</p>
+          <ul id="retention-candidates-list" class="scrollable-list" style="height: 300px;">
+            <!-- Candidates -->
+          </ul>
+          <div class="modal-footer">
+            <button id="save-retention-btn" class="btn-primary">Save Retentions</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Dashboard -->
+  <div id="dashboard-screen" class="screen hidden">
+    <header class="top-bar glass-panel">
+      <div class="logo-area">
+        <img src="images/ipl.webp" class="header-logo" alt="IPL">
+        <div class="logo-mini">IPL 2026</div>
+      </div>
+      <div class="sold-players-marquee">
+        <div class="marquee-content" id="sold-players-rail">
+          <!-- Populated by JS -->
+          <span class="sold-item-placeholder">Auction Live - Sold Players will appear here...</span>
+        </div>
+      </div>
+      <div class="user-profile">
+        <span id="user-display">DEVANSH UPADHYAY</span>
+        <button id="logout-btn" class="btn-small">Logout</button>
+      </div>
+    </header>
+
+    <div class="content-grid">
+      <!-- Left: Players Pool -->
+      <section class="panel-players glass-panel">
+        <h3><span class="icon">👥</span> Player Pool (<span id="player-count">0</span>)</h3>
+        <div class="filter-bar">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="Batsman">Bat</button>
+          <button class="filter-btn" data-filter="Bowler">Bowl</button>
+          <button class="filter-btn" data-filter="All-Rounder">AR</button>
+          <button class="filter-btn" data-filter="Wicketkeeper">WK</button>
+        </div>
+        <ul id="players-list" class="scrollable-list">
+          <!-- Populated by JS -->
+        </ul>
+      </section>
+
+      <!-- Center: Auction Stage -->
+      <section class="panel-stage">
+        <div id="auction-card" class="auction-card-wrapper hidden">
+          <div class="card-inner glass-card">
+            <div class="card-header">
+              <span class="player-role-badge" id="card-role">BATSMAN</span>
+            </div>
+
+            <div class="player-visual">
+              <img id="card-avatar" class="player-img hidden" src="" alt="Player Avatar">
+              <div class="dummy-avatar" id="dummy-avatar">👤</div>
+              <!-- A real implementation would use images -->
+            </div>
+
+            <h2 id="card-name" class="glitch-text">VIRAT KOHLI</h2>
+
+            <div class="player-info-row">
+              <span class="country-badge" id="card-country-badge">
+                <span id="card-country">🇮🇳</span> <span id="card-country-name">India</span>
+              </span>
+            </div>
+
+            <!-- New Stats Grid -->
+            <div class="performance-stats glass-panel">
+              <div class="p-stat">
+                <span class="p-label">Mat</span>
+                <span class="p-val" id="stat-matches">0</span>
+              </div>
+              <div class="p-stat">
+                <span class="p-label">Runs</span>
+                <span class="p-val" id="stat-runs">0</span>
+              </div>
+              <div class="p-stat">
+                <span class="p-label">Avg</span>
+                <span class="p-val" id="stat-avg">0</span>
+              </div>
+              <div class="p-stat">
+                <span class="p-label">S.R.</span>
+                <span class="p-val" id="stat-sr">0</span>
+              </div>
+              <div class="p-stat">
+                <span class="p-label">H.S.</span>
+                <span class="p-val" id="stat-hs">0</span>
+              </div>
+            </div>
+
+            <div class="stats-grid">
+              <div class="stat-box">
+                <span class="label">Base Price</span>
+                <span class="value" id="card-base-price">₹2.0 Cr</span>
+              </div>
+              <div class="stat-box big-box">
+                <span class="label">Current Bid</span>
+                <span class="value highlight-text" id="card-current-bid">₹2.0 Cr</span>
+                <span class="sub-value" id="card-bidder">No Bids</span>
+              </div>
+              <div class="stat-box">
+                <span class="label">Timer</span>
+                <div class="timer-ring">
+                  <svg width="60" height="60">
+                    <circle class="ring-bg" cx="30" cy="30" r="26"></circle>
+                    <circle class="ring-progress" id="timer-ring-circle" cx="30" cy="30" r="26"></circle>
+                  </svg>
+                  <span id="card-timer">15</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bidding War Display -->
+            <div id="bidding-war-section" class="bidding-war-panel hidden">
+              <h4 class="war-title">Bidding War</h4>
+              <div id="war-chips-container" class="war-chips">
+                <!-- Populated by JS -->
+              </div>
+            </div>
+
+            <div id="status-stamp" class="status-stamp hidden">SOLD</div>
+          </div>
+        </div>
+
+        <div id="welcome-state" class="welcome-box glass-card">
+          <h2>Ready to Start?</h2>
+          <p>Select a player from the left panel to begin the bidding war.</p>
+        </div>
+      </section>
+
+      <!-- Right: Teams Control -->
+      <section class="panel-teams">
+        <div class="teams-grid" id="teams-grid">
+          <!-- 10 Teams populated by JS via Grid -->
+        </div>
+      </section>
+    </div>
+
+    <!-- Team Details Modal -->
+    <div id="team-modal" class="modal-overlay hidden">
+      <div class="modal-content glass-card">
+        <div class="modal-header">
+          <h2 id="modal-team-name">Team Name</h2>
+          <button id="close-modal" class="close-btn">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="modal-stats">
+            <div>Budget: <span id="modal-budget" class="highlight">₹0 Cr</span></div>
+            <div>Squad Size: <span id="modal-squad-size">0</span></div>
+          </div>
+
+          <div class="team-management-grid">
+            <!-- Left: Available Squad -->
+            <div class="squad-column">
+              <h3>Squad Pool</h3>
+              <ul id="modal-player-list" class="purchased-list-modal dropzone" ondrop="drop(event, 'squad')"
+                ondragover="allowDrop(event)">
+                <!-- Populated by JS -->
+              </ul>
+            </div>
+
+            <!-- Right: Playing 11 -->
+            <div class="playing11-column">
+              <h3>Playing XI (<span id="p11-count">0</span>/11)</h3>
+              <div id="playing-11-list" class="playing-11-grid dropzone" ondrop="drop(event, 'p11')"
+                ondragover="allowDrop(event)">
+                <!-- Slots populated by JS -->
+              </div>
+
+              <!-- Team Power Stats -->
+              <div class="team-power-stats glass-panel">
+                <h4>Team Power</h4>
+                <div class="power-bars">
+                  <div class="power-row">
+                    <span>Batting</span>
+                    <div class="progress-bar">
+                      <div id="power-bat" style="width:0%"></div>
+                    </div>
+                  </div>
+                  <div class="power-row">
+                    <span>Bowling</span>
+                    <div class="progress-bar">
+                      <div id="power-bowl" style="width:0%"></div>
+                    </div>
+                  </div>
+                  <div class="power-row">
+                    <span>Balance</span>
+                    <div class="progress-bar">
+                      <div id="power-bal" style="width:0%"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- RTM Modal -->
+    <div id="rtm-modal" class="modal-overlay hidden">
+      <div class="modal-content glass-card rtm-prompt-card">
+        <h2 class="glitch-text">RTM OPPORTUNITY!</h2>
+        <div id="rtm-message" class="rtm-message">
+          <!-- Populated by JS -->
+        </div>
+        <div class="rtm-actions">
+          <button id="rtm-use-btn" class="btn-primary glow-btn">USE RTM</button>
+          <button id="rtm-decline-btn" class="btn-small">DECLINE</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <!-- Notification Toast -->
+  <div id="toast-box"></div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

@@ -110,6 +110,54 @@ let state = {
 };
 
 // --- INIT ---
+function updateTopThreePlayers() {
+  const container = document.getElementById("top-three-list");
+  if (!container) return;
+
+  // Collect all sold/retained players
+  let allSold = [];
+  state.teams.forEach(team => {
+    team.purchased.forEach(p => {
+      allSold.push({
+        name: p.name,
+        price: p.price,
+        teamName: team.name,
+        teamId: team.id
+      });
+    });
+  });
+
+  // Sort by price descending
+  allSold.sort((a, b) => b.price - a.price);
+
+  // Take top 3
+  const topThree = allSold.slice(0, 3);
+
+  if (topThree.length === 0) {
+    container.innerHTML = '<div class="top-player-placeholder">Auction in progress...</div>';
+    return;
+  }
+
+  container.innerHTML = "";
+  topThree.forEach((p, index) => {
+    const rank = index + 1;
+    const rankClass = `rank-${rank}`;
+    const medalClass = rank === 1 ? 'gold' : rank === 2 ? 'silver' : 'bronze';
+
+    const card = document.createElement("div");
+    card.className = `top-player-card ${medalClass}`;
+    card.innerHTML = `
+      <div class="rank-badge ${rankClass}">${p.name.charAt(0)}</div>
+      <div class="top-player-info">
+        <span class="top-player-name">${p.name}</span>
+        <span class="top-player-team">${p.teamName}</span>
+      </div>
+      <div class="top-player-price">₹${p.price.toFixed(2)} Cr</div>
+    `;
+    container.appendChild(card);
+  });
+}
+
 function init() {
   // Clone data to state
   state.teams = JSON.parse(JSON.stringify(TEAMS_CONFIG));
@@ -143,6 +191,7 @@ function init() {
   }));
 
   setupEventListeners();
+  updateTopThreePlayers(); // Initial call
 }
 
 function setupEventListeners() {
@@ -445,6 +494,9 @@ function updateBiddingWarUI() {
     return;
   }
 
+  const currentPlayer = state.players[state.auction.playerIdx];
+  const role = currentPlayer.role;
+
   section.classList.remove("hidden");
   container.innerHTML = "";
 
@@ -453,6 +505,11 @@ function updateBiddingWarUI() {
     const spent = team.purchased.reduce((a, c) => a + c.price, 0);
     const remaining = (team.budget - spent).toFixed(2);
 
+    // Filter matching players specifically
+    const matchingPlayers = team.purchased.filter(p => p.role === role);
+    const roleCount = matchingPlayers.length;
+    const playerNames = matchingPlayers.map(p => p.name).join(", ");
+
     const chip = document.createElement("div");
     chip.className = "war-chip";
     chip.innerHTML = `
@@ -460,6 +517,7 @@ function updateBiddingWarUI() {
       <div class="war-team-info">
         <span class="war-team-name">${team.name}</span>
         <span class="war-team-budget">₹${remaining} Cr</span>
+        <span class="war-role-count">${role}: ${roleCount} ${roleCount > 0 ? `(${playerNames})` : ''}</span>
       </div>
     `;
     container.appendChild(chip);
@@ -510,6 +568,11 @@ function endAuction() {
     renderTeamsGrid();
     renderPlayersList(document.querySelector(".filter-btn.active").dataset.filter);
     updatePlayerCount();
+
+    // AUTOMATION: Start next auction after delay
+    setTimeout(() => {
+      startNextAuction();
+    }, 5000);
   }
 }
 
@@ -549,7 +612,7 @@ function handleRTMDecision(useRTM) {
 
 function finalizeSold(player, teamId, price, isRTM = false) {
   const team = state.teams.find(t => t.id === teamId);
-  team.purchased.push({ name: player.name, price: price, isRTM: isRTM });
+  team.purchased.push({ name: player.name, price: price, isRTM: isRTM, role: player.role });
   player.sold = true;
 
   // Show SOLD Stamp
@@ -567,10 +630,33 @@ function finalizeSold(player, teamId, price, isRTM = false) {
   addSoldToRail(player.name, price, team.name, team.id);
 
   // Audio & Refresh
+  playHammerSound();
   playTeamTheme(team.id);
   renderTeamsGrid();
   renderPlayersList(document.querySelector(".filter-btn.active").dataset.filter);
   updatePlayerCount();
+  updateTopThreePlayers(); // Update Top 3 List
+
+  // AUTOMATION: Start next auction after delay
+  setTimeout(() => {
+    startNextAuction();
+  }, 5000);
+}
+
+function startNextAuction() {
+  if (state.auction.active) return; // Safety check
+
+  // Find next unsold player
+  const nextPlayer = state.players.find(p => !p.sold);
+  if (nextPlayer) {
+    showToast(`Incoming: ${nextPlayer.name}...`, "info");
+    setTimeout(() => {
+      startAuction(nextPlayer.id);
+    }, 1000);
+  } else {
+    showToast("All players auctioned!", "success");
+    playIPLTheme(); // Celebration music
+  }
 }
 
 // --- AUDIO LOGIC ---
@@ -584,7 +670,13 @@ function playTeamTheme(teamId) {
 
   // Path: ./sounds/{teamId}.mp3
   // Example: ./sounds/csk.mp3
-  const audioPath = `sounds/${teamId}.mp3`;
+  let audioPath = `sounds/${teamId}.mp3`;
+
+  // Custom fix for DC new audio
+  if (teamId === 'dc') {
+    audioPath = `sounds/dc (2).mp3`;
+  }
+
   currentAudio = new Audio(audioPath);
 
   // Set volume (optional)
@@ -599,7 +691,7 @@ function playTeamTheme(teamId) {
 function playIPLTheme() {
   if (currentAudio) stopAudio();
 
-  const audioPath = `sounds/ipl.mp3`; // Ensure case
+  const audioPath = `sounds/Ipl.mp3`; // Ensure case
 
   currentAudio = new Audio(audioPath);
   currentAudio.volume = 0.5;
@@ -607,6 +699,42 @@ function playIPLTheme() {
   currentAudio.play().catch(e => {
     console.warn("IPL Theme play failed:", e);
   });
+}
+
+function playAuctionStartSequence() {
+  if (currentAudio) stopAudio();
+
+  // 1. Play People Cheering
+  const peopleAudio = new Audio('sounds/people.mp3');
+  peopleAudio.volume = 0.6;
+  peopleAudio.play();
+  currentAudio = peopleAudio;
+
+  // 2. After 8 seconds, play Viraj Intro
+  setTimeout(() => {
+    if (currentAudio === peopleAudio) {
+      stopAudio();
+      const virajAudio = new Audio('sounds/viraj.mp3');
+      virajAudio.volume = 0.8;
+      virajAudio.play();
+      currentAudio = virajAudio;
+
+      // 3. After Viraj Intro ends, play Clapping
+      virajAudio.onended = () => {
+        const clappingAudio = new Audio('sounds/clapping.mp3');
+        clappingAudio.volume = 0.6;
+        clappingAudio.play();
+        currentAudio = clappingAudio;
+
+        // 4. After 5 seconds of Clapping, play IPL Theme
+        setTimeout(() => {
+          if (currentAudio === clappingAudio) {
+            playIPLTheme();
+          }
+        }, 5000);
+      };
+    }
+  }, 8000);
 }
 
 function playUnsoldSound() {
@@ -619,6 +747,12 @@ function playUnsoldSound() {
   currentAudio.play().catch(e => {
     console.warn("Unsold sound play failed:", e);
   });
+}
+
+function playHammerSound() {
+  const audio = new Audio('sounds/hammer.mp3');
+  audio.volume = 0.9;
+  audio.play().catch(e => console.warn("Hammer sound play failed:", e));
 }
 
 function stopAudio() {
@@ -1046,7 +1180,8 @@ function saveRetentions() {
       team.purchased.push({
         name: player.name,
         price: customPrice,
-        isRetention: true
+        isRetention: true,
+        role: player.role
       });
 
       showToast(`Retained ${player.name} for ₹${customPrice.toFixed(2)} Cr`);
@@ -1054,6 +1189,7 @@ function saveRetentions() {
       // Add to Visual Rail immediately
       addSoldToRail(player.name, customPrice, team.name, team.id);
     });
+    updateTopThreePlayers(); // Update Top 3 List
   }
 
   closeRetentionModal();
@@ -1072,8 +1208,8 @@ function finishRetentionPhase() {
   // Specifically update budget since we modified it during retention
   renderDashboard();
 
-  // Start IPL Theme
-  playIPLTheme();
+  // Start Auction Start Sequence
+  playAuctionStartSequence();
 }
 
 function generateRandomStats(role) {

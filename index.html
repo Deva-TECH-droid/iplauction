@@ -76,6 +76,20 @@
     </div>
   </div>
 
+  <!-- Team Selection Screen -->
+  <div id="team-selection-screen" class="screen hidden">
+    <div class="selection-container glass-card"
+      style="width: 80%; max-width: 800px; margin: auto; margin-top: 10vh; padding: 30px;">
+      <h2 style="text-align:center; color:white; margin-bottom: 20px;">Select Your Franchise</h2>
+      <p style="text-align:center; color:#ccc; margin-bottom: 30px;">You will bid for this team. AI will control the
+        rest.</p>
+      <div class="teams-grid" id="selection-teams-grid"
+        style="grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));">
+        <!-- Managed by JS -->
+      </div>
+    </div>
+  </div>
+
   <!-- Main Dashboard -->
   <div id="dashboard-screen" class="screen hidden">
     <header class="top-bar glass-panel">
@@ -101,10 +115,11 @@
         <h3><span class="icon">👥</span> Player Pool (<span id="player-count">0</span>)</h3>
         <div class="filter-bar">
           <button class="filter-btn active" data-filter="all">All</button>
-          <button class="filter-btn" data-filter="Batsman">Bat</button>
-          <button class="filter-btn" data-filter="Bowler">Bowl</button>
-          <button class="filter-btn" data-filter="All-Rounder">AR</button>
-          <button class="filter-btn" data-filter="Wicketkeeper">WK</button>
+          <button class="filter-btn" data-filter="Grade A">Grade A</button>
+          <button class="filter-btn" data-filter="Grade B">Grade B</button>
+          <button class="filter-btn" data-filter="Batting">Batting</button>
+          <button class="filter-btn" data-filter="Bowling">Bowling</button>
+          <button class="filter-btn" data-filter="Fielding">Fielding</button>
         </div>
         <div id="top-three-players" class="top-three-section">
           <h4 class="section-title">🏆 Top Paid Players</h4>
@@ -291,6 +306,46 @@
 
   <!-- Notification Toast -->
   <div id="toast-box"></div>
+
+  <!-- Team Info Modal -->
+  <div id="team-info-modal" class="modal-overlay hidden">
+    <div class="modal-content glass-card">
+      <div class="modal-header">
+        <h2 id="info-team-name">Team Information</h2>
+        <button id="close-info-modal" class="close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="info-grid">
+          <div class="info-item">
+            <span class="info-label">Head Coach</span>
+            <span class="info-value" id="info-head-coach">-</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Assistant Coach</span>
+            <span class="info-value" id="info-assist-coach">-</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Batting Coach</span>
+            <span class="info-value" id="info-batting-coach">-</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Bowling Coach</span>
+            <span class="info-value" id="info-bowling-coach">-</span>
+          </div>
+          <div class="info-item" style="grid-column: span 2;">
+            <span class="info-label">Owner</span>
+            <span class="info-value" id="info-owner">-</span>
+          </div>
+          <div class="info-item" style="grid-column: span 2;">
+            <span class="info-label">IPL History</span>
+            <div id="info-history" class="history-list">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>

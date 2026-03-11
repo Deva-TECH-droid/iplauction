@@ -16,74 +16,225 @@ const TEAMS_CONFIG = [
   { id: "pbks", name: "PBKS", full: "Punjab Kings", budget: 100.0, color: "#DD1F2D" }
 ];
 
-// Generate 50+ Players
+const TEAM_DETAILS = {
+  csk: {
+    coach: "Stephen Fleming",
+    assistant: "Michael Hussey",
+    batting: "Michael Hussey",
+    bowling: "Dwayne Bravo",
+    owner: "Chennai Super Kings Cricket Ltd.",
+    wins: ["2010", "2011", "2018", "2021", "2023"]
+  },
+  mi: {
+    coach: "Mahela Jayawardene",
+    assistant: "Paras Mhambrey",
+    batting: "Mahela Jayawardene",
+    bowling: "Lasith Malinga",
+    owner: "Reliance Industries",
+    wins: ["2013", "2015", "2017", "2019", "2020"]
+  },
+  rcb: {
+    coach: "Andy Flower",
+    assistant: "Adam Griffith",
+    batting: "Andy Flower",
+    bowling: "Adam Griffith",
+    owner: "United Spirits",
+    wins: []
+  },
+  kkr: {
+    coach: "Chandrakant Pandit",
+    assistant: "Abhishek Nayar",
+    batting: "Chandrakant Pandit",
+    bowling: "Bharat Arun",
+    owner: "Shah Rukh Khan, Juhi Chawla, Jay Mehta",
+    wins: ["2012", "2014", "2024"]
+  },
+  gt: {
+    coach: "Ashish Nehra",
+    assistant: "Vikram Solanki",
+    batting: "Vikram Solanki",
+    bowling: "Aashish Kapoor",
+    owner: "CVC Capital Partners",
+    wins: ["2022"]
+  },
+  lsg: {
+    coach: "Justin Langer",
+    assistant: "Lance Klusener",
+    batting: "Sridharan Sriram",
+    bowling: "Morne Morkel",
+    owner: "RPSG Group",
+    wins: []
+  },
+  rr: {
+    coach: "Rahul Dravid",
+    assistant: "Shane Bond",
+    batting: "Rahul Dravid",
+    bowling: "Shane Bond",
+    owner: "Manoj Badale",
+    wins: ["2008"]
+  },
+  srh: {
+    coach: "Daniel Vettori",
+    assistant: "Simon Helmot",
+    batting: "Hemang Badani",
+    bowling: "Dale Steyn",
+    owner: "SUN Group",
+    wins: ["2016"]
+  },
+  dc: {
+    coach: "Ricky Ponting",
+    assistant: "Pravin Amre",
+    batting: "Ricky Ponting",
+    bowling: "James Hopes",
+    owner: "GMR Group and JSW Group",
+    wins: []
+  },
+  pbks: {
+    coach: "Trevor Bayliss",
+    assistant: "Brad Haddin",
+    batting: "Trevor Bayliss",
+    bowling: "Charl Langeveldt",
+    owner: "Preity Zinta, Ness Wadia, Mohit Burman",
+    wins: []
+  }
+};
+
+// Generate 200+ Players
 const PLAYERS_DB = [
-  // Marquee Set
-  { name: "Virat Kohli", country: "India", role: "Batsman", base: 2.0 },
-  { name: "Rohit Sharma", country: "India", role: "Batsman", base: 2.0 },
-  { name: "Ben Stokes", country: "England", role: "All-Rounder", base: 2.0 },
-  { name: "Jasprit Bumrah", country: "India", role: "Bowler", base: 2.0 },
-  { name: "Hardik Pandya", country: "India", role: "All-Rounder", base: 2.0 },
-  { name: "Rashid Khan", country: "Afghanistan", role: "Bowler", base: 2.0 },
-  { name: "David Warner", country: "Australia", role: "Batsman", base: 2.0 },
-  { name: "Ravindra Jadeja", country: "India", role: "All-Rounder", base: 2.0 },
-  { name: "Jos Buttler", country: "England", role: "Wicketkeeper", base: 2.0 },
-  { name: "Pat Cummins", country: "Australia", role: "Bowler", base: 2.0 },
+  // Grade A (User specified)
+  { name: "Virat Kohli", country: "India", role: "Batsman", base: 2.0, category: "Grade A" },
+  { name: "Rohit Sharma", country: "India", role: "Batsman", base: 2.0, category: "Grade A" },
+  { name: "MS Dhoni", country: "India", role: "Wicketkeeper", base: 2.0, category: "Grade A" },
+  { name: "Jasprit Bumrah", country: "India", role: "Bowler", base: 2.0, category: "Grade A" },
+  { name: "Bhuvneshwar Kumar", country: "India", role: "Bowler", base: 2.0, category: "Grade A" },
 
-  // Set 1
-  { name: "Shubman Gill", country: "India", role: "Batsman", base: 1.5 },
-  { name: "Rishabh Pant", country: "India", role: "Wicketkeeper", base: 1.5 },
-  { name: "K.L. Rahul", country: "India", role: "Wicketkeeper", base: 1.5 },
-  { name: "Suryakumar Yadav", country: "India", role: "Batsman", base: 1.5 },
-  { name: "Jofra Archer", country: "England", role: "Bowler", base: 1.5 },
-  { name: "Trent Boult", country: "New Zealand", role: "Bowler", base: 1.5 },
-  { name: "Glenn Maxwell", country: "Australia", role: "All-Rounder", base: 1.5 },
-  { name: "Kagiso Rabada", country: "South Africa", role: "Bowler", base: 1.5 },
-  { name: "Shreyas Iyer", country: "India", role: "Batsman", base: 1.5 },
-  { name: "Sanju Samson", country: "India", role: "Wicketkeeper", base: 1.5 },
+  // Grade B (User specified)
+  { name: "Varun Chakravarthy", country: "India", role: "Bowler", base: 1.5, category: "Grade B" },
+  { name: "K.L. Rahul", country: "India", role: "Wicketkeeper", base: 1.5, category: "Grade B" },
+  { name: "Hardik Pandya", country: "India", role: "All-Rounder", base: 2.0, category: "Grade B" },
+  { name: "Shreyas Iyer", country: "India", role: "Batsman", base: 1.5, category: "Grade B" },
+  { name: "Ravindra Jadeja", country: "India", role: "All-Rounder", base: 2.0, category: "Grade B" },
 
-  // Set 2
-  { name: "Ishan Kishan", country: "India", role: "Wicketkeeper", base: 1.0 },
-  { name: "Mohammed Shami", country: "India", role: "Bowler", base: 1.0 },
-  { name: "Yuzvendra Chahal", country: "India", role: "Bowler", base: 1.0 },
-  { name: "Faf du Plessis", country: "South Africa", role: "Batsman", base: 1.0 },
-  { name: "Moeen Ali", country: "England", role: "All-Rounder", base: 1.0 },
-  { name: "Sunil Narine", country: "West Indies", role: "All-Rounder", base: 1.0 },
-  { name: "Andre Russell", country: "West Indies", role: "All-Rounder", base: 1.0 },
-  { name: "Quinton de Kock", country: "South Africa", role: "Wicketkeeper", base: 1.0 },
-  { name: "Shikhar Dhawan", country: "India", role: "Batsman", base: 1.0 },
-  { name: "Bhuvneshwar Kumar", country: "India", role: "Bowler", base: 1.0 },
+  // --- BATTING --
+  { name: "Shubman Gill", country: "India", role: "Batsman", base: 1.5, category: "Batting" },
+  { name: "Suryakumar Yadav", country: "India", role: "Batsman", base: 1.5, category: "Batting" },
+  { name: "David Warner", country: "Australia", role: "Batsman", base: 2.0, category: "Batting" },
+  { name: "Rishabh Pant", country: "India", role: "Wicketkeeper", base: 1.5, category: "Batting" },
+  { name: "Sanju Samson", country: "India", role: "Wicketkeeper", base: 1.5, category: "Batting" },
+  { name: "Ishan Kishan", country: "India", role: "Wicketkeeper", base: 1.0, category: "Batting" },
+  { name: "Faf du Plessis", country: "South Africa", role: "Batsman", base: 1.0, category: "Batting" },
+  { name: "Quinton de Kock", country: "South Africa", role: "Wicketkeeper", base: 1.0, category: "Batting" },
+  { name: "Shikhar Dhawan", country: "India", role: "Batsman", base: 1.0, category: "Batting" },
+  { name: "Ruturaj Gaikwad", country: "India", role: "Batsman", base: 0.5, category: "Batting" },
+  { name: "Yashasvi Jaiswal", country: "India", role: "Batsman", base: 0.5, category: "Batting" },
+  { name: "Nicholas Pooran", country: "West Indies", role: "Wicketkeeper", base: 1.0, category: "Batting" },
+  { name: "Shimron Hetmyer", country: "West Indies", role: "Batsman", base: 1.0, category: "Batting" },
+  { name: "Tim David", country: "Australia", role: "Batsman", base: 0.75, category: "Batting" },
+  { name: "Aiden Markram", country: "South Africa", role: "Batsman", base: 1.0, category: "Batting" },
+  { name: "David Miller", country: "South Africa", role: "Batsman", base: 1.0, category: "Batting" },
+  { name: "Devdutt Padikkal", country: "India", role: "Batsman", base: 0.5, category: "Batting" },
+  { name: "Rahul Tripathi", country: "India", role: "Batsman", base: 0.5, category: "Batting" },
+  { name: "Heinrich Klaasen", country: "South Africa", role: "Wicketkeeper", base: 1.0, category: "Batting" },
+  { name: "Jonny Bairstow", country: "England", role: "Wicketkeeper", base: 1.5, category: "Batting" },
+  { name: "Kane Williamson", country: "New Zealand", role: "Batsman", base: 1.5, category: "Batting" },
+  { name: "Prithvi Shaw", country: "India", role: "Batsman", base: 0.5, category: "Batting" },
+  { name: "Steve Smith", country: "Australia", role: "Batsman", base: 1.5, category: "Batting" },
+  { name: "Jason Roy", country: "England", role: "Batsman", base: 1.0, category: "Batting" },
+  { name: "Mayank Agarwal", country: "India", role: "Batsman", base: 0.5, category: "Batting" },
+  { name: "Rajat Patidar", country: "India", role: "Batsman", base: 0.5, category: "Batting" },
+  { name: "Sai Sudharsan", country: "India", role: "Batsman", base: 0.5, category: "Batting" },
+  { name: "Tilak Varma", country: "India", role: "Batsman", base: 0.5, category: "Batting" },
+  { name: "Manish Pandey", country: "India", role: "Batsman", base: 0.5, category: "Batting" },
+  { name: "Rilee Rossouw", country: "South Africa", role: "Batsman", base: 1.0, category: "Batting" },
+  { name: "Harry Brook", country: "England", role: "Batsman", base: 1.5, category: "Batting" },
+  { name: "Phil Salt", country: "England", role: "Wicketkeeper", base: 1.0, category: "Batting" },
+  { name: "Rahmanullah Gurbaz", country: "Afghanistan", role: "Wicketkeeper", base: 0.5, category: "Batting" },
+  { name: "Rovman Powell", country: "West Indies", role: "Batsman", base: 0.5, category: "Batting" },
+  { name: "Tristan Stubbs", country: "South Africa", role: "Wicketkeeper", base: 0.5, category: "Batting" },
+  { name: "Litton Das", country: "Bangladesh", role: "Wicketkeeper", base: 0.5, category: "Batting" },
+  { name: "Kyle Mayers", country: "West Indies", role: "Batsman", base: 0.5, category: "Batting" },
+  { name: "Devon Conway", country: "New Zealand", role: "Batsman", base: 1.0, category: "Batting" },
+  { name: "Rachin Ravindra", country: "New Zealand", role: "Batsman", base: 1.5, category: "Batting" },
+  { name: "Tristan Stubbs", country: "South Africa", role: "Wicketkeeper", base: 0.5, category: "Batting" },
+  // Adding more random generated batsmen
+  ...Array.from({ length: 30 }).map((_, i) => ({ name: `Reg. Batsman ${i + 1}`, country: "India", role: "Batsman", base: 0.2, category: "Batting" })),
 
-  // Set 3 (Uncapped/Lower Base)
-  { name: "Arshdeep Singh", country: "India", role: "Bowler", base: 0.5 },
-  { name: "Umran Malik", country: "India", role: "Bowler", base: 0.5 },
-  { name: "Rahul Tripathi", country: "India", role: "Batsman", base: 0.5 },
-  { name: "Ruturaj Gaikwad", country: "India", role: "Batsman", base: 0.5 },
-  { name: "Devdutt Padikkal", country: "India", role: "Batsman", base: 0.5 },
-  { name: "Venkatesh Iyer", country: "India", role: "All-Rounder", base: 0.5 },
-  { name: "Harshal Patel", country: "India", role: "Bowler", base: 0.5 },
-  { name: "Varun Chakravarthy", country: "India", role: "Bowler", base: 0.5 },
-  { name: "Ravi Bishnoi", country: "India", role: "Bowler", base: 0.5 },
-  { name: "Yashasvi Jaiswal", country: "India", role: "Batsman", base: 0.5 },
+  // --- BOWLING ---
+  { name: "Rashid Khan", country: "Afghanistan", role: "Bowler", base: 2.0, category: "Bowling" },
+  { name: "Pat Cummins", country: "Australia", role: "Bowler", base: 2.0, category: "Bowling" },
+  { name: "Jofra Archer", country: "England", role: "Bowler", base: 1.5, category: "Bowling" },
+  { name: "Trent Boult", country: "New Zealand", role: "Bowler", base: 1.5, category: "Bowling" },
+  { name: "Kagiso Rabada", country: "South Africa", role: "Bowler", base: 1.5, category: "Bowling" },
+  { name: "Mohammed Shami", country: "India", role: "Bowler", base: 1.0, category: "Bowling" },
+  { name: "Yuzvendra Chahal", country: "India", role: "Bowler", base: 1.0, category: "Bowling" },
+  { name: "Arshdeep Singh", country: "India", role: "Bowler", base: 0.5, category: "Bowling" },
+  { name: "Umran Malik", country: "India", role: "Bowler", base: 0.5, category: "Bowling" },
+  { name: "Harshal Patel", country: "India", role: "Bowler", base: 0.5, category: "Bowling" },
+  { name: "Ravi Bishnoi", country: "India", role: "Bowler", base: 0.5, category: "Bowling" },
+  { name: "Marco Jansen", country: "South Africa", role: "Bowler", base: 0.75, category: "Bowling" },
+  { name: "Lockie Ferguson", country: "New Zealand", role: "Bowler", base: 1.0, category: "Bowling" },
+  { name: "Mohammed Siraj", country: "India", role: "Bowler", base: 1.5, category: "Bowling" },
+  { name: "Kuldeep Yadav", country: "India", role: "Bowler", base: 1.0, category: "Bowling" },
+  { name: "Avesh Khan", country: "India", role: "Bowler", base: 0.5, category: "Bowling" },
+  { name: "Deepak Chahar", country: "India", role: "Bowler", base: 1.0, category: "Bowling" },
+  { name: "Mukesh Kumar", country: "India", role: "Bowler", base: 0.5, category: "Bowling" },
+  { name: "Anrich Nortje", country: "South Africa", role: "Bowler", base: 1.0, category: "Bowling" },
+  { name: "Josh Hazlewood", country: "Australia", role: "Bowler", base: 1.5, category: "Bowling" },
+  { name: "Mitchell Starc", country: "Australia", role: "Bowler", base: 2.0, category: "Bowling" },
+  { name: "Adam Zampa", country: "Australia", role: "Bowler", base: 1.0, category: "Bowling" },
+  { name: "Maheesh Theekshana", country: "Sri Lanka", role: "Bowler", base: 1.0, category: "Bowling" },
+  { name: "Matheesha Pathirana", country: "Sri Lanka", role: "Bowler", base: 0.5, category: "Bowling" },
+  { name: "Noor Ahmad", country: "Afghanistan", role: "Bowler", base: 0.5, category: "Bowling" },
+  { name: "Naveen-ul-Haq", country: "Afghanistan", role: "Bowler", base: 0.5, category: "Bowling" },
+  { name: "Alzarri Joseph", country: "West Indies", role: "Bowler", base: 1.0, category: "Bowling" },
+  { name: "Mustafizur Rahman", country: "Bangladesh", role: "Bowler", base: 1.0, category: "Bowling" },
+  { name: "Prashant Solanki", country: "India", role: "Bowler", base: 0.2, category: "Bowling" },
+  { name: "Mohit Sharma", country: "India", role: "Bowler", base: 0.5, category: "Bowling" },
+  { name: "Piyush Chawla", country: "India", role: "Bowler", base: 0.5, category: "Bowling" },
+  { name: "Amit Mishra", country: "India", role: "Bowler", base: 0.5, category: "Bowling" },
+  { name: "Ishant Sharma", country: "India", role: "Bowler", base: 0.5, category: "Bowling" },
+  { name: "Khaleel Ahmed", country: "India", role: "Bowler", base: 0.5, category: "Bowling" },
+  { name: "Chetan Sakariya", country: "India", role: "Bowler", base: 0.5, category: "Bowling" },
+  { name: "Kamlesh Nagarkoti", country: "India", role: "Bowler", base: 0.2, category: "Bowling" },
+  { name: "Shivani Mavi", country: "India", role: "Bowler", base: 0.5, category: "Bowling" },
+  { name: "Navdeep Saini", country: "India", role: "Bowler", base: 0.5, category: "Bowling" },
+  { name: "Sandeep Sharma", country: "India", role: "Bowler", base: 0.5, category: "Bowling" },
+  // Adding more random generated bowlers
+  ...Array.from({ length: 30 }).map((_, i) => ({ name: `Reg. Bowler ${i + 1}`, country: "India", role: "Bowler", base: 0.2, category: "Bowling" })),
 
-  // Foreign Stars
-  { name: "Sam Curran", country: "England", role: "All-Rounder", base: 1.5 },
-  { name: "Liam Livingstone", country: "England", role: "All-Rounder", base: 1.0 },
-  { name: "Wanindu Hasaranga", country: "Sri Lanka", role: "All-Rounder", base: 1.0 },
-  { name: "Nicholas Pooran", country: "West Indies", role: "Wicketkeeper", base: 1.0 },
-  { name: "Shimron Hetmyer", country: "West Indies", role: "Batsman", base: 1.0 },
-  { name: "Tim David", country: "Australia", role: "Batsman", base: 0.75 },
-  { name: "Marco Jansen", country: "South Africa", role: "Bowler", base: 0.75 },
-  { name: "Aiden Markram", country: "South Africa", role: "Batsman", base: 1.0 },
-  { name: "David Miller", country: "South Africa", role: "Batsman", base: 1.0 },
-  { name: "Lockie Ferguson", country: "New Zealand", role: "Bowler", base: 1.0 },
+  // --- FIELDING (All Rounders primarily) ---
+  { name: "Ben Stokes", country: "England", role: "All-Rounder", base: 2.0, category: "Fielding" },
+  { name: "Glenn Maxwell", country: "Australia", role: "All-Rounder", base: 1.5, category: "Fielding" },
+  { name: "Moeen Ali", country: "England", role: "All-Rounder", base: 1.0, category: "Fielding" },
+  { name: "Sunil Narine", country: "West Indies", role: "All-Rounder", base: 1.0, category: "Fielding" },
+  { name: "Andre Russell", country: "West Indies", role: "All-Rounder", base: 1.0, category: "Fielding" },
+  { name: "Venkatesh Iyer", country: "India", role: "All-Rounder", base: 0.5, category: "Fielding" },
+  { name: "Sam Curran", country: "England", role: "All-Rounder", base: 1.5, category: "Fielding" },
+  { name: "Liam Livingstone", country: "England", role: "All-Rounder", base: 1.0, category: "Fielding" },
+  { name: "Wanindu Hasaranga", country: "Sri Lanka", role: "All-Rounder", base: 1.0, category: "Fielding" },
+  { name: "Riyan Parag", country: "India", role: "All-Rounder", base: 0.2, category: "Fielding" },
+  { name: "Abdul Samad", country: "India", role: "Batsman", base: 0.2, category: "Fielding" }, // Fielder
+  { name: "Abhishek Sharma", country: "India", role: "All-Rounder", base: 0.2, category: "Fielding" },
+  { name: "Cameron Green", country: "Australia", role: "All-Rounder", base: 2.0, category: "Fielding" },
+  { name: "Marcus Stoinis", country: "Australia", role: "All-Rounder", base: 1.5, category: "Fielding" },
+  { name: "Jason Holder", country: "West Indies", role: "All-Rounder", base: 1.0, category: "Fielding" },
+  { name: "Mitchell Marsh", country: "Australia", role: "All-Rounder", base: 1.5, category: "Fielding" },
+  { name: "Shakib Al Hasan", country: "Bangladesh", role: "All-Rounder", base: 1.0, category: "Fielding" },
+  { name: "Washington Sundar", country: "India", role: "All-Rounder", base: 1.0, category: "Fielding" },
+  { name: "Axar Patel", country: "India", role: "All-Rounder", base: 1.0, category: "Fielding" },
+  { name: "Krunal Pandya", country: "India", role: "All-Rounder", base: 1.0, category: "Fielding" },
+  { name: "Deepak Hooda", country: "India", role: "All-Rounder", base: 0.5, category: "Fielding" },
+  { name: "Rahul Tewatia", country: "India", role: "All-Rounder", base: 0.5, category: "Fielding" },
+  { name: "Vijay Shankar", country: "India", role: "All-Rounder", base: 0.5, category: "Fielding" },
+  { name: "Rishi Dhawan", country: "India", role: "All-Rounder", base: 0.5, category: "Fielding" },
+  { name: "Romario Shepherd", country: "West Indies", role: "All-Rounder", base: 0.5, category: "Fielding" },
+  { name: "Odean Smith", country: "West Indies", role: "All-Rounder", base: 0.5, category: "Fielding" },
+  { name: "Daryl Mitchell", country: "New Zealand", role: "All-Rounder", base: 1.0, category: "Fielding" },
+  { name: "Michael Bracewell", country: "New Zealand", role: "All-Rounder", base: 1.0, category: "Fielding" },
+  { name: "Colin Munro", country: "New Zealand", role: "All-Rounder", base: 0.5, category: "Fielding" },
+  // Adding more random generated all-rounders
+  ...Array.from({ length: 30 }).map((_, i) => ({ name: `Reg. All-Rounder ${i + 1}`, country: "India", role: "All-Rounder", base: 0.2, category: "Fielding" }))
 
-  // Fillers
-  { name: "Riyan Parag", country: "India", role: "All-Rounder", base: 0.2 },
-  { name: "Abdul Samad", country: "India", role: "Batsman", base: 0.2 },
-  { name: "Abhishek Sharma", country: "India", role: "All-Rounder", base: 0.2 },
-  { name: "Kartik Tyagi", country: "India", role: "Bowler", base: 0.2 },
-  { name: "Shahrukh Khan", country: "India", role: "Batsman", base: 0.2 }
 ];
 // --- AUTO PLAYER IMAGE GENERATOR ---
 function getPlayerImage(name) {
@@ -102,11 +253,14 @@ let state = {
     lastBidder: null,
     timer: 15,
     interval: null,
+    aiTimeout: null,
+    aiMaxBids: {},
     rtmActive: false,
     rtmContext: null,
     involvedTeams: []
   },
-  user: null
+  user: null,
+  userTeamId: null // Stores the ID of the team controlled by the user
 };
 
 // --- INIT ---
@@ -221,6 +375,12 @@ function setupEventListeners() {
     if (e.target.id === "retention-modal") closeRetentionModal();
   });
   document.getElementById("save-retention-btn").addEventListener("click", saveRetentions);
+
+  // Team Info Modal Close
+  document.getElementById("close-info-modal").onclick = closeTeamInfoModal;
+  document.getElementById("team-info-modal").onclick = (e) => {
+    if (e.target.id === "team-info-modal") closeTeamInfoModal();
+  };
 }
 
 // --- LOGIC: Login ---
@@ -257,14 +417,15 @@ function renderPlayersList(filter = "all") {
   listEl.innerHTML = "";
 
   state.players.forEach(p => {
-    if (filter !== "all" && p.role !== filter) return;
+    // Modify this to filter by "category" instead of "role"
+    if (filter !== "all" && p.category !== filter) return;
 
     const li = document.createElement("li");
     li.className = `player-row ${p.sold ? "sold" : ""}`;
     li.innerHTML = `
             <div>
                 <strong>${p.name}</strong>
-                <small style="color:#aaa; display:block;">${p.role} • ${p.country}</small>
+                <small style="color:#aaa; display:block;">${p.category} • ${p.role} • ${p.country}</small>
             </div>
             <div style="text-align:right;">
                 <span class="badge">₹${p.base} Cr</span>
@@ -325,6 +486,16 @@ function renderTeamsGrid() {
       }
     });
 
+    // Disable inputs and buttons if team is computer-controlled (unless no user team chosen yet for safety)
+    if (state.userTeamId && state.userTeamId !== t.id) {
+      input.disabled = true;
+      input.placeholder = "AI";
+      input.style.opacity = "0.5";
+      btn.disabled = true;
+      btn.style.opacity = "0.5";
+      btn.style.cursor = "not-allowed";
+    }
+
     // Card Click opens modal
     card.onclick = () => openTeamModal(t.id);
 
@@ -341,6 +512,19 @@ function startAuction(playerId) {
   state.auction.active = true;
   state.auction.timer = 15;
   state.auction.involvedTeams = [];
+
+  // Clear any existing AI timeout
+  clearTimeout(state.auction.aiTimeout);
+  state.auction.aiMaxBids = {};
+
+  // Generate AI Max Bids for this player
+  state.teams.forEach(t => {
+    if (t.id !== state.userTeamId) {
+      // Random max bid based on player base, role, and a random luck factor
+      const maxMultiplier = Math.random() * 5 + 1; // 1x to 6x base price
+      state.auction.aiMaxBids[t.id] = player.base * maxMultiplier;
+    }
+  });
 
   // Hide Bidding War Section
   document.getElementById("bidding-war-section").classList.add("hidden");
@@ -408,6 +592,9 @@ function startAuction(playerId) {
   runTimer();
 
   showToast(`Auction started for ${player.name}`);
+
+  // Trigger AI evaluation
+  scheduleComputerBid();
 }
 
 function runTimer() {
@@ -474,6 +661,16 @@ function placeBid(teamId) {
   }
   updateBiddingWarUI();
 
+  // Clear pending AI bids and reschedule
+  clearTimeout(state.auction.aiTimeout);
+
+  // Actually apply the bid via code simulation if it was AI, 
+  // or just handle the manual input side-effects.
+  // The UI update and state update happen above.
+
+  // Reschedule AI bid Evaluation
+  scheduleComputerBid();
+
   // UI Updates
   document.getElementById("card-current-bid").textContent = `₹${amount.toFixed(2)} Cr`;
   document.getElementById("card-bidder").textContent = team.name;
@@ -526,6 +723,7 @@ function updateBiddingWarUI() {
 
 function endAuction() {
   clearInterval(state.auction.interval);
+  clearTimeout(state.auction.aiTimeout);
   state.auction.active = false;
 
   const player = state.players[state.auction.playerIdx];
@@ -659,6 +857,63 @@ function startNextAuction() {
   }
 }
 
+// --- AI BIDDING LOGIC ---
+function scheduleComputerBid() {
+  if (!state.auction.active) return;
+  if (!state.userTeamId) return; // Wait until a user team is picked
+
+  const currentBid = state.auction.currentBid;
+
+  // Find AI teams that CAN bid and WANT to bid
+  const eligibleAITeams = state.teams.filter(t => {
+    // Exclude user team
+    if (t.id === state.userTeamId) return false;
+
+    // Don't bid against self
+    if (state.auction.lastBidder === t.id) return false;
+
+    // Check if within generated AI budget constraint for this player
+    const aiMaxForPlayer = state.auction.aiMaxBids[t.id] || 0;
+    const bidAmount = currentBid + 0.25;
+    if (bidAmount > aiMaxForPlayer) return false;
+
+    // Check real budget constraint
+    const spent = t.purchased.reduce((acc, curr) => acc + curr.price, 0);
+    const remaining = t.budget - spent;
+    if (remaining < bidAmount) return false;
+
+    // Check squad size constraint (max 25)
+    if (t.purchased.length >= 25) return false;
+
+    return true;
+  });
+
+  if (eligibleAITeams.length === 0) {
+    // No AI can bid anymore
+    return;
+  }
+
+  // Randomly select one eligible AI team to bid
+  const randomIndex = Math.floor(Math.random() * eligibleAITeams.length);
+  const selectedAITeam = eligibleAITeams[randomIndex];
+
+  // Random delay between 1.5s and 4.5s to simulate thinking
+  const delay = Math.floor(Math.random() * 3000) + 1500;
+
+  state.auction.aiTimeout = setTimeout(() => {
+    // Check state hasn't changed wildly
+    if (!state.auction.active) return;
+
+    // Execute bid
+    const bidAmount = state.auction.currentBid + 0.25;
+    const input = document.getElementById(`bid-input-${selectedAITeam.id}`);
+    if (input) {
+      input.value = bidAmount; // Simulate UI input filler
+    }
+    placeBid(selectedAITeam.id);
+  }, delay);
+}
+
 // --- AUDIO LOGIC ---
 let currentAudio = null;
 
@@ -770,10 +1025,10 @@ function closeModal() {
 }
 
 // --- UTILS ---
-function filterPlayers(role) {
+function filterPlayers(category) {
   document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
-  document.querySelector(`.filter-btn[data-filter="${role}"]`).classList.add("active");
-  renderPlayersList(role);
+  document.querySelector(`.filter-btn[data-filter="${category}"]`).classList.add("active");
+  renderPlayersList(category);
 }
 
 function getFlag(country) {
@@ -869,6 +1124,7 @@ function renderRetentionTeams() {
       <div class="retention-player-preview">
         ${t.purchased.map(p => `<div>• ${p.name} (${p.price} Cr)</div>`).join('')}
       </div>
+      <button class="team-info-btn" onclick="openTeamInfoModal('${t.id}'); event.stopPropagation();">Info</button>
     `;
     card.onclick = () => openRetentionModal(t.id);
     grid.appendChild(card);
@@ -1202,7 +1458,41 @@ function closeRetentionModal() {
 
 function finishRetentionPhase() {
   document.getElementById("retention-screen").classList.add("hidden");
+  initTeamSelectionPhase();
+}
+
+// --- TEAM SELECTION LOGIC ---
+function initTeamSelectionPhase() {
+  document.getElementById("team-selection-screen").classList.remove("hidden");
+  const grid = document.getElementById("selection-teams-grid");
+  grid.innerHTML = "";
+
+  state.teams.forEach(t => {
+    const card = document.createElement("div");
+    card.className = `team-card team-${t.id}`;
+    card.style.cursor = "pointer";
+    card.innerHTML = `
+      <div class="team-logo-wrapper" style="margin: 0 auto 10px auto;">
+          <img src="images/${t.id}.webp" onerror="this.src='https://ui-avatars.com/api/?name=${t.name}&background=random&color=fff&size=64'" alt="${t.name}" class="team-logo-img">
+      </div>
+      <div style="text-align:center; font-weight:bold; font-size: 1.2rem;">${t.name}</div>
+    `;
+    card.onclick = () => selectUserTeam(t.id);
+    grid.appendChild(card);
+  });
+}
+
+function selectUserTeam(teamId) {
+  state.userTeamId = teamId;
+  const team = state.teams.find(t => t.id === teamId);
+  showToast(`You have selected ${team.full}`);
+
+  document.getElementById("team-selection-screen").classList.add("hidden");
   document.getElementById("dashboard-screen").classList.remove("hidden");
+
+  // Update profile display to indicate team
+  const userDisp = document.getElementById("user-display");
+  userDisp.textContent = `${state.user} (${team.name})`;
 
   // Need to update the dashboard with current state
   // Specifically update budget since we modified it during retention
@@ -1210,6 +1500,36 @@ function finishRetentionPhase() {
 
   // Start Auction Start Sequence
   playAuctionStartSequence();
+}
+
+function openTeamInfoModal(teamId) {
+  const team = state.teams.find(t => t.id === teamId);
+  const details = TEAM_DETAILS[teamId];
+  if (!details) return;
+
+  document.getElementById("info-team-name").textContent = team.full;
+  document.getElementById("info-head-coach").textContent = details.coach;
+  document.getElementById("info-assist-coach").textContent = details.assistant;
+  document.getElementById("info-batting-coach").textContent = details.batting;
+  document.getElementById("info-bowling-coach").textContent = details.bowling;
+  document.getElementById("info-owner").textContent = details.owner;
+
+  const historyDiv = document.getElementById("info-history");
+  historyDiv.innerHTML = "";
+  if (details.wins.length === 0) {
+    historyDiv.innerHTML = "<div class='info-value'>No IPL titles yet</div>";
+  } else {
+    historyDiv.innerHTML = `
+      <div class='info-value'>Total Wins: ${details.wins.length}</div>
+      <div class='history-item'>Years: ${details.wins.join(", ")}</div>
+    `;
+  }
+
+  document.getElementById("team-info-modal").classList.remove("hidden");
+}
+
+function closeTeamInfoModal() {
+  document.getElementById("team-info-modal").classList.add("hidden");
 }
 
 function generateRandomStats(role) {

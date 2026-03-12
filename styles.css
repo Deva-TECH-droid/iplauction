@@ -54,8 +54,89 @@ body {
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8), 0 0 10px rgba(0, 255, 102, 0.1);
 }
 
-.hidden {
-    display: none !important;
+/* Utility Classes */
+.hidden { display: none !important; }
+.highlight { color: var(--gold); }
+.text-center { text-align: center; }
+
+/* Team Specific Colors - Faded Backgrounds for Pills */
+.csk-color { background: rgba(252, 206, 6, 0.2); color: #fccb06; border: 1px solid rgba(252, 206, 6, 0.4); }
+.mi-color { background: rgba(0, 75, 160, 0.3); color: #5bc0de; border: 1px solid rgba(0, 75, 160, 0.5); text-shadow: 0 0 5px rgba(255,255,255,0.3); }
+.rcb-color { background: rgba(235, 26, 60, 0.2); color: #eb1a3c; border: 1px solid rgba(235, 26, 60, 0.4); }
+.kkr-color { background: rgba(58, 34, 93, 0.4); color: #cba92b; border: 1px solid rgba(203, 169, 43, 0.5); }
+.gt-color { background: rgba(27, 33, 51, 0.6); color: #77c7f2; border: 1px solid rgba(119, 199, 242, 0.5); }
+.lsg-color { background: rgba(167, 34, 137, 0.2); color: #a72289; border: 1px solid rgba(167, 34, 137, 0.4); }
+.rr-color { background: rgba(234, 26, 133, 0.2); color: #ea1a85; border: 1px solid rgba(234, 26, 133, 0.4); }
+.dc-color { background: rgba(0, 0, 139, 0.3); color: #6495ED; border: 1px solid rgba(0, 0, 139, 0.5); }
+.pbks-color { background: rgba(237, 27, 36, 0.2); color: #ed1b24; border: 1px solid rgba(237, 27, 36, 0.4); }
+.srh-color { background: rgba(242, 101, 34, 0.2); color: #f26522; border: 1px solid rgba(242, 101, 34, 0.4); }
+
+.team-pill {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 1.1em;
+  letter-spacing: 1px;
+}
+
+/* Detailed Squad UI Badges */
+.role-badge {
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 0.8em;
+  font-weight: bold;
+  margin-left: 8px;
+  text-transform: uppercase;
+}
+.role-batter { background: rgba(235, 26, 60, 0.2); color: #eb1a3c; border: 1px solid rgba(235, 26, 60, 0.4); }
+.role-bowler { background: rgba(0, 191, 255, 0.2); color: #00bfff; border: 1px solid rgba(0, 191, 255, 0.4); }
+.role-allrounder { background: rgba(0, 255, 102, 0.2); color: #00ff66; border: 1px solid rgba(0, 255, 102, 0.4); }
+.role-wk { background: rgba(255, 153, 0, 0.2); color: #ff9900; border: 1px solid rgba(255, 153, 0, 0.4); }
+
+.price-badge {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 0.85em;
+  font-family: monospace;
+}
+
+.leadership-highlight {
+  background: linear-gradient(90deg, rgba(255,215,0,0.15) 0%, rgba(0,0,0,0) 100%);
+  border-left: 4px solid var(--gold);
+}
+
+.squad-role-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 15px;
+  margin-top: 15px;
+  margin-bottom: 25px;
+}
+
+.squad-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.squad-card:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.squad-card.leadership-highlight {
+  background: linear-gradient(135deg, rgba(255,215,0,0.1) 0%, rgba(255,255,255,0.05) 100%);
+  border: 1px solid rgba(255, 215, 0, 0.4);
+  border-left: 4px solid var(--gold);
 }
 
 /* --- Intro Screen --- */

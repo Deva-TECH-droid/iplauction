@@ -1,5 +1,5 @@
 /*
-IPL Mega Auction 2025 - Engine
+IPL Mega Auction 2026 - Engine
 */
 
 // --- CONFIGURATION ---
@@ -21,14 +21,14 @@ const TEAM_DETAILS = {
     coach: "Stephen Fleming",
     assistant: "Michael Hussey",
     batting: "Michael Hussey",
-    bowling: "Dwayne Bravo",
+    bowling: "Eric Simons",
     owner: "Chennai Super Kings Cricket Ltd.",
     wins: ["2010", "2011", "2018", "2021", "2023"]
   },
   mi: {
     coach: "Mahela Jayawardene",
     assistant: "Paras Mhambrey",
-    batting: "Mahela Jayawardene",
+    batting: "Kieron Pollard",
     bowling: "Lasith Malinga",
     owner: "Reliance Industries",
     wins: ["2013", "2015", "2017", "2019", "2020"]
@@ -36,39 +36,39 @@ const TEAM_DETAILS = {
   rcb: {
     coach: "Andy Flower",
     assistant: "Adam Griffith",
-    batting: "Andy Flower",
-    bowling: "Adam Griffith",
+    batting: "Dinesh Karthik",
+    bowling: "Omkar Salvi",
     owner: "United Spirits",
     wins: []
   },
   kkr: {
-    coach: "Chandrakant Pandit",
-    assistant: "Abhishek Nayar",
-    batting: "Chandrakant Pandit",
-    bowling: "Bharat Arun",
+    coach: "Abhishek Nayar",
+    assistant: "Shane Watson & Dwayne Bravo",
+    batting: "Andre Russell (Power Coach)",
+    bowling: "Tim Southee",
     owner: "Shah Rukh Khan, Juhi Chawla, Jay Mehta",
     wins: ["2012", "2014", "2024"]
   },
   gt: {
     coach: "Ashish Nehra",
     assistant: "Vikram Solanki",
-    batting: "Vikram Solanki",
+    batting: "Gary Kirsten",
     bowling: "Aashish Kapoor",
     owner: "CVC Capital Partners",
     wins: ["2022"]
   },
   lsg: {
     coach: "Justin Langer",
-    assistant: "Lance Klusener",
-    batting: "Sridharan Sriram",
+    assistant: "Zaheer Khan",
+    batting: "Lance Klusener",
     bowling: "Morne Morkel",
     owner: "RPSG Group",
     wins: []
   },
   rr: {
     coach: "Rahul Dravid",
-    assistant: "Shane Bond",
-    batting: "Rahul Dravid",
+    assistant: "Vikram Rathour",
+    batting: "Vikram Rathour",
     bowling: "Shane Bond",
     owner: "Manoj Badale",
     wins: ["2008"]
@@ -82,18 +82,18 @@ const TEAM_DETAILS = {
     wins: ["2016"]
   },
   dc: {
-    coach: "Ricky Ponting",
-    assistant: "Pravin Amre",
-    batting: "Ricky Ponting",
+    coach: "Hemang Badani",
+    assistant: "Venugopal Rao",
+    batting: "Pravin Amre",
     bowling: "James Hopes",
     owner: "GMR Group and JSW Group",
     wins: []
   },
   pbks: {
-    coach: "Trevor Bayliss",
+    coach: "Ricky Ponting",
     assistant: "Brad Haddin",
-    batting: "Trevor Bayliss",
-    bowling: "Charl Langeveldt",
+    batting: "Ricky Ponting",
+    bowling: "James Hopes",
     owner: "Preity Zinta, Ness Wadia, Mohit Burman",
     wins: []
   }
@@ -257,13 +257,185 @@ let state = {
     aiMaxBids: {},
     rtmActive: false,
     rtmContext: null,
-    involvedTeams: []
+    involvedTeams: [],
+    maxBids: 15, // Maximum bids an AI team will make on a player
   },
   user: null,
   userTeamId: null // Stores the ID of the team controlled by the user
 };
 
-// --- INIT ---
+// --- IPL 2026 DATA ---
+const IPL_2026_SCHEDULE = [
+  { date: "March 28", time: "7:30 PM", match: "RCB vs SRH", venue: "Bengaluru" },
+  { date: "March 29", time: "3:30 PM", match: "CSK vs PBKS", venue: "Chennai" }, // Phase 1 match 2
+  { date: "March 29", time: "7:30 PM", match: "MI vs KKR", venue: "Mumbai" },
+  { date: "March 30", time: "7:30 PM", match: "RR vs CSK", venue: "Guwahati" },
+  { date: "March 31", time: "7:30 PM", match: "PBKS vs GT", venue: "Mullanpur" },
+  { date: "April 1", time: "7:30 PM", match: "LSG vs DC", venue: "Lucknow" },
+  { date: "April 2", time: "7:30 PM", match: "KKR vs RCB", venue: "Kolkata" },
+  { date: "April 3", time: "7:30 PM", match: "SRH vs MI", venue: "Hyderabad" },
+  { date: "April 4", time: "3:30 PM", match: "DC vs MI", venue: "Delhi" },
+  { date: "April 4", time: "7:30 PM", match: "GT vs RR", venue: "Ahmedabad" },
+  { date: "April 5", time: "3:30 PM", match: "SRH vs LSG", venue: "Hyderabad" },
+  { date: "April 5", time: "7:30 PM", match: "RCB vs CSK", venue: "Bengaluru" },
+  { date: "April 6", time: "7:30 PM", match: "KKR vs PBKS", venue: "Kolkata" },
+  { date: "April 7", time: "7:30 PM", match: "GT vs DC", venue: "Ahmedabad" },
+  { date: "April 8", time: "7:30 PM", match: "RR vs LSG", venue: "Guwahati" },
+  { date: "April 9", time: "7:30 PM", match: "PBKS vs MI", venue: "Mullanpur" },
+  { date: "April 10", time: "7:30 PM", match: "RCB vs GT", venue: "Bengaluru" },
+  { date: "April 11", time: "3:30 PM", match: "PBKS vs SRH", venue: "Mullanpur" },
+  { date: "April 11", time: "7:30 PM", match: "CSK vs DC", venue: "Chennai" },
+  { date: "April 12", time: "3:30 PM", match: "RR vs KKR", venue: "Guwahati" },
+  { date: "April 12", time: "7:30 PM", match: "MI vs LSG", venue: "Mumbai" },
+];
+
+const IPL_2026_SQUADS = {
+  csk: [
+    { name: "Ruturaj Gaikwad", role: "batter", price: "Retained: ₹18 Cr", isCaptain: true },
+    { name: "Ayush Mhatre", role: "batter", price: "Retained: ₹30 L" },
+    { name: "Dewald Brevis", role: "batter", price: "Retained: ₹2.2 Cr" },
+    { name: "Sarfaraz Khan", role: "batter", price: "Bought: ₹75 L" },
+    { name: "Matthew Short", role: "batter", price: "Bought: ₹1.5 Cr" },
+    { name: "MS Dhoni", role: "wk", price: "Retained: ₹4 Cr" },
+    { name: "Sanju Samson", role: "wk", price: "Traded: ₹18 Cr" },
+    { name: "Urvil Patel", role: "wk", price: "Retained: ₹30 L" },
+    { name: "Shivam Dube", role: "allrounder", price: "Retained: ₹12 Cr" },
+    { name: "Jamie Overton", role: "allrounder", price: "Retained: ₹1.5 Cr" },
+    { name: "Ramakrishna Ghosh", role: "allrounder", price: "Retained: ₹30 L" },
+    { name: "Akeal Hosein", role: "allrounder", price: "Bought: ₹2 Cr" },
+    { name: "Aman Khan", role: "allrounder", price: "Bought: ₹40 L" },
+    { name: "Prashant Veer", role: "allrounder", price: "Bought: ₹14.20 Cr" },
+    { name: "Noor Ahmad", role: "bowler", price: "Retained: ₹10 Cr" },
+    { name: "Khaleel Ahmed", role: "bowler", price: "Retained: ₹4.8 Cr" },
+    { name: "Mukesh Choudhary", role: "bowler", price: "Retained: ₹30 L" },
+    { name: "Nathan Ellis", role: "bowler", price: "Retained: ₹2 Cr" },
+    { name: "Rahul Chahar", role: "bowler", price: "Bought: ₹5.20 Cr" },
+    { name: "Matt Henry", role: "bowler", price: "Bought: ₹2 Cr" },
+    { name: "Shreyas Gopal", role: "bowler", price: "Retained: ₹30 L" },
+    { name: "Anshul Kamboj", role: "bowler", price: "Retained: ₹3.4 Cr" },
+    { name: "Gurjapneet Singh", role: "bowler", price: "Retained: ₹2.2 Cr" }
+  ],
+  mi: [
+    { name: "Hardik Pandya", role: "allrounder", price: "Retained: ₹16.35 Cr", isCaptain: true },
+    { name: "Rohit Sharma", role: "batter", price: "Retained: ₹16.3 Cr" },
+    { name: "Suryakumar Yadav", role: "batter", price: "Retained: ₹16.35 Cr" },
+    { name: "Tilak Varma", role: "batter", price: "Retained: ₹8 Cr" },
+    { name: "Nehal Wadhera", role: "batter", price: "Bought: ₹4.20 Cr" },
+    { name: "Tim David", role: "batter", price: "Retained: ₹3 Cr" },
+    { name: "Ishan Kishan", role: "wk", price: "Bought: ₹15 Cr" },
+    { name: "Ryan Rickelton", role: "wk", price: "Bought: ₹1 Cr" },
+    { name: "Quinton de Kock", role: "wk", price: "Bought: ₹1 Cr" },
+    { name: "Mitchell Santner", role: "allrounder", price: "Bought: ₹2 Cr" },
+    { name: "Will Jacks", role: "allrounder", price: "Retained: ₹5.25 Cr" },
+    { name: "Sherfane Rutherford", role: "allrounder", price: "Bought: ₹1.5 Cr" },
+    { name: "Corbin Bosch", role: "allrounder", price: "Bought: ₹30 L" },
+    { name: "Shams Mulani", role: "allrounder", price: "Bought: ₹30 L" },
+    { name: "Jasprit Bumrah", role: "bowler", price: "Retained: ₹18 Cr" },
+    { name: "Deepak Chahar", role: "bowler", price: "Retained: ₹9.25 Cr" },
+    { name: "Gerald Coetzee", role: "bowler", price: "Bought: ₹5 Cr" },
+    { name: "Nuwan Thushara", role: "bowler", price: "Bought: ₹4.8 Cr" },
+    { name: "Trent Boult", role: "bowler", price: "Retained: ₹12.5 Cr" },
+    { name: "Allah Ghazanfar", role: "bowler", price: "Bought: ₹4.8 Cr" }
+  ],
+  rcb: [
+    { name: "Rajat Patidar", role: "batter", price: "Retained: ₹11 Cr", isCaptain: true },
+    { name: "Virat Kohli", role: "batter", price: "Retained: ₹21 Cr" },
+    { name: "Josh Hazlewood", role: "bowler", price: "Retained: ₹12.5 Cr" },
+    { name: "Phil Salt", role: "wk", price: "Retained: ₹11.5 Cr" },
+    { name: "Jitesh Sharma", role: "wk", price: "Retained: ₹11 Cr" },
+    { name: "Bhuvneshwar Kumar", role: "bowler", price: "Retained: ₹10.75 Cr" },
+    { name: "Venkatesh Iyer", role: "allrounder", price: "Bought: ₹7 Cr" },
+    { name: "Krunal Pandya", role: "allrounder", price: "Retained: ₹5.75 Cr" },
+    { name: "Ramandeep Singh", role: "allrounder", price: "Bought: ₹5.20 Cr" },
+    { name: "Yash Dayal", role: "bowler", price: "Retained: ₹5 Cr" },
+    { name: "Tim David", role: "batter", price: "Retained: ₹3 Cr" }
+  ],
+  kkr: [
+    { name: "Ajinkya Rahane", role: "batter", price: "Retained: ₹1.5 Cr", isCaptain: true },
+    { name: "Rinku Singh", role: "batter", price: "Retained: ₹13 Cr" },
+    { name: "Manish Pandey", role: "batter", price: "Bought: ₹3 Cr" },
+    { name: "Angkrish Raghuvanshi", role: "batter", price: "Retained: ₹3 Cr" },
+    { name: "Rahul Tripathi", role: "batter", price: "Bought: ₹4.8 Cr" },
+    { name: "Rovman Powell", role: "batter", price: "Bought: ₹1.5 Cr" },
+    { name: "Sarthak Ranjan", role: "batter", price: "Bought: ₹30 L" },
+    { name: "Finn Allen", role: "wk", price: "Bought: ₹2 Cr" },
+    { name: "Tim Seifert", role: "wk", price: "Bought: ₹1.5 Cr" },
+    { name: "Tejasvi Dahiya", role: "wk", price: "Bought: ₹30 L" },
+    { name: "Sunil Narine", role: "allrounder", price: "Retained: ₹12 Cr" },
+    { name: "Cameron Green", role: "allrounder", price: "Bought: ₹25.20 Cr" },
+    { name: "Ramandeep Singh", role: "allrounder", price: "Retained: ₹4 Cr" },
+    { name: "Anukul Roy", role: "allrounder", price: "Bought: ₹40 L" },
+    { name: "Rachin Ravindra", role: "allrounder", price: "Bought: ₹2 Cr" },
+    { name: "Varun Chakravarthy", role: "bowler", price: "Retained: ₹12 Cr" },
+    { name: "Harshit Rana", role: "bowler", price: "Retained: ₹4 Cr" },
+    { name: "Vaibhav Arora", role: "bowler", price: "Retained: ₹1.8 Cr" },
+    { name: "Umran Malik", role: "bowler", price: "Retained: ₹75 L" },
+    { name: "Matheesha Pathirana", role: "bowler", price: "Bought: ₹18 Cr" },
+    { name: "Akash Deep", role: "bowler", price: "Bought: ₹3 Cr" },
+    { name: "Daksh Kamrae", role: "bowler", price: "Bought: ₹30 L" }
+  ],
+  lsg: [
+    { name: "Rishabh Pant", role: "wk", price: "Bought: ₹27 Cr", isCaptain: true },
+    { name: "Nicholas Pooran", role: "wk", price: "Retained: ₹21 Cr", isViceCaptain: true },
+    { name: "Mayank Yadav", role: "bowler", price: "Retained: ₹11 Cr" },
+    { name: "Mohammed Shami", role: "bowler", price: "Retained: ₹10 Cr" },
+    { name: "Avesh Khan", role: "bowler", price: "Retained: ₹9.75 Cr" },
+    { name: "Josh Inglis", role: "wk", price: "Bought: ₹8.60 Cr" },
+    { name: "Mitchell Marsh", role: "allrounder", price: "Bought: ₹7 Cr" },
+    { name: "Wanindu Hasaranga", role: "allrounder", price: "Bought: ₹2 Cr" },
+    { name: "Anrich Nortje", role: "bowler", price: "Bought: ₹2 Cr" }
+  ],
+  gt: [
+    { name: "Shubman Gill", role: "batter", price: "Retained: ₹18 Cr", isCaptain: true },
+    { name: "Rashid Khan", role: "bowler", price: "Retained: ₹18 Cr" },
+    { name: "Jos Buttler", role: "wk", price: "Retained: ₹12 Cr" },
+    { name: "Mohammed Siraj", role: "bowler", price: "Retained: ₹10 Cr" },
+    { name: "Prasidh Krishna", role: "bowler", price: "Retained: ₹6 Cr" },
+    { name: "Sai Sudharsan", role: "batter", price: "Retained: ₹8 Cr" }
+  ],
+  rr: [
+    { name: "Riyan Parag", role: "batter", price: "Retained: ₹14 Cr", isCaptain: true },
+    { name: "Ravindra Jadeja", role: "allrounder", price: "Traded: ₹14 Cr", isViceCaptain: true },
+    { name: "Yashasvi Jaiswal", role: "batter", price: "Retained: ₹18 Cr" },
+    { name: "Dhruv Jurel", role: "wk", price: "Retained: ₹14 Cr" },
+    { name: "Shimron Hetmyer", role: "batter", price: "Retained: ₹11 Cr" },
+    { name: "Jofra Archer", role: "bowler", price: "Retained: ₹12.5 Cr" },
+    { name: "Ravi Bishnoi", role: "bowler", price: "Bought: ₹7.2 Cr" },
+    { name: "Tushar Deshpande", role: "bowler", price: "Retained: ₹6.5 Cr" },
+    { name: "Sandeep Sharma", role: "bowler", price: "Retained: ₹4 Cr" },
+    { name: "Sam Curran", role: "allrounder", price: "Traded: ₹2.4 Cr" }
+  ],
+  dc: [
+    { name: "Axar Patel", role: "allrounder", price: "Retained: ₹16.5 Cr", isCaptain: true },
+    { name: "KL Rahul", role: "wk", price: "Retained: ₹14 Cr", isViceCaptain: true },
+    { name: "Kuldeep Yadav", role: "bowler", price: "Retained: ₹13.25 Cr" },
+    { name: "Mitchell Starc", role: "bowler", price: "Retained: ₹11.75 Cr" },
+    { name: "T Natarajan", role: "bowler", price: "Retained: ₹10.75 Cr" },
+    { name: "Tristan Stubbs", role: "wk", price: "Retained: ₹10 Cr" },
+    { name: "Mukesh Kumar", role: "bowler", price: "Retained: ₹8 Cr" },
+    { name: "Auqib Nabi Dar", role: "allrounder", price: "Bought: ₹8.40 Cr" },
+    { name: "Pathum Nissanka", role: "batter", price: "Bought: ₹4 Cr" }
+  ],
+  pbks: [
+    { name: "Shreyas Iyer", role: "batter", price: "Bought: ₹15 Cr", isCaptain: true },
+    { name: "Ben Dwarshuis", role: "bowler", price: "Bought: ₹5 Cr" },
+    { name: "Cooper Connolly", role: "allrounder", price: "Bought: ₹4 Cr" },
+    { name: "Arshdeep Singh", role: "bowler", price: "Retained: ₹8 Cr" },
+    { name: "Shashank Singh", role: "batter", price: "Retained: ₹4 Cr" }
+  ],
+  srh: [
+    { name: "Pat Cummins", role: "bowler", price: "Retained: ₹18 Cr", isCaptain: true },
+    { name: "Heinrich Klaasen", role: "wk", price: "Retained: ₹16 Cr" },
+    { name: "Travis Head", role: "batter", price: "Retained: ₹14 Cr" },
+    { name: "Abhishek Sharma", role: "allrounder", price: "Retained: ₹14 Cr" },
+    { name: "Liam Livingstone", role: "allrounder", price: "Bought: ₹13 Cr" },
+    { name: "Nitish Kumar Reddy", role: "allrounder", price: "Retained: ₹6 Cr" },
+    { name: "Jack Edwards", role: "allrounder", price: "Bought: ₹3 Cr" },
+    { name: "Ishan Kishan", role: "wk", price: "Retained: ₹15 Cr" }
+  ]
+};
+
+// --- CONSTANTS ---
 function updateTopThreePlayers() {
   const container = document.getElementById("top-three-list");
   if (!container) return;
@@ -381,6 +553,180 @@ function setupEventListeners() {
   document.getElementById("team-info-modal").onclick = (e) => {
     if (e.target.id === "team-info-modal") closeTeamInfoModal();
   };
+
+  // News Modal Open/Close
+  const newsBtn = document.getElementById("news-btn");
+  if (newsBtn) {
+    newsBtn.addEventListener("click", () => {
+      document.getElementById("news-modal").classList.remove("hidden");
+    });
+  }
+
+  const closeNewsBtn = document.getElementById("close-news-modal");
+  if (closeNewsBtn) {
+    closeNewsBtn.addEventListener("click", () => {
+      document.getElementById("news-modal").classList.add("hidden");
+    });
+  }
+
+  const newsModal = document.getElementById("news-modal");
+  if (newsModal) {
+    newsModal.addEventListener("click", (e) => {
+      if (e.target.id === "news-modal") document.getElementById("news-modal").classList.add("hidden");
+    });
+  }
+
+  // Schedule Modal
+  const openScheduleBtn = document.getElementById("open-schedule-btn");
+  if (openScheduleBtn) {
+    openScheduleBtn.addEventListener("click", () => {
+      document.getElementById("schedule-modal").classList.remove("hidden");
+      populateSchedule();
+    });
+  }
+  document.getElementById("close-schedule-modal")?.addEventListener("click", () => {
+    document.getElementById("schedule-modal").classList.add("hidden");
+  });
+
+  // Squads Modal
+  const openSquadsBtn = document.getElementById("open-squads-btn");
+  if (openSquadsBtn) {
+    openSquadsBtn.addEventListener("click", () => {
+      document.getElementById("squads-modal").classList.remove("hidden");
+      populateSquadFilterBar();
+    });
+  }
+  document.getElementById("close-squads-modal")?.addEventListener("click", () => {
+    document.getElementById("squads-modal").classList.add("hidden");
+  });
+}
+
+function populateSchedule() {
+  const container = document.getElementById("schedule-list");
+  if (!container) return;
+  container.innerHTML = "";
+  
+  IPL_2026_SCHEDULE.forEach(match => {
+    // Colorize team abbreviations
+    const styledMatch = match.match.replace(/\b(CSK|MI|RCB|KKR|GT|LSG|RR|DC|PBKS|SRH)\b/g, (team) => {
+      const colorClass = team.toLowerCase() + "-color";
+      return `<span class="team-pill ${colorClass}">${team}</span>`;
+    });
+
+    const el = document.createElement("div");
+    el.className = "glass-panel";
+    el.style.padding = "10px 15px";
+    el.style.display = "flex";
+    el.style.justifyContent = "space-between";
+    el.style.alignItems = "center";
+    el.style.marginBottom = "10px";
+    
+    el.innerHTML = `
+      <div>
+        <strong style="color:var(--gold); font-size:1.1em;">${match.date}</strong>
+        <span style="color:#aaa; margin-left:10px; font-size:0.9em;">${match.time} IST</span>
+      </div>
+      <div style="font-weight:bold; font-size:1.2em;">${styledMatch}</div>
+      <div style="color:#888; font-size:0.9em;">📍 ${match.venue}</div>
+    `;
+    container.appendChild(el);
+  });
+}
+
+function populateSquadFilterBar() {
+  const filterBar = document.getElementById("squad-filter-bar");
+  if (!filterBar || filterBar.children.length > 0) return; // Already populated
+  
+  const teams = [
+    { id: "csk", name: "CSK" }, { id: "mi", name: "MI" }, { id: "rcb", name: "RCB" },
+    { id: "kkr", name: "KKR" }, { id: "gt", name: "GT" }, { id: "lsg", name: "LSG" },
+    { id: "rr", name: "RR" }, { id: "dc", name: "DC" }, { id: "pbks", name: "PBKS" },
+    { id: "srh", name: "SRH" }
+  ];
+
+  teams.forEach(team => {
+    const btn = document.createElement("button");
+    btn.className = "filter-btn";
+    btn.textContent = team.name;
+    btn.onclick = () => {
+      // Update active state
+      Array.from(filterBar.children).forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      
+      // Update display area
+      document.getElementById("squad-team-name").textContent = TEAM_DETAILS[team.id]?.owner.split(',')[0] + " (" + team.name + ") Roster";
+      const list = document.getElementById("squad-player-list");
+      list.innerHTML = "";
+      
+      const players = IPL_2026_SQUADS[team.id] || [];
+      
+      // Group and sort players by specific roles
+      const rolesOrder = [
+        { id: 'batter', label: '🏏 Batters' },
+        { id: 'wk', label: '🧤 Wicketkeepers' },
+        { id: 'allrounder', label: '🔄 All-rounders' },
+        { id: 'bowler', label: '⚡ Bowlers' }
+      ];
+
+      rolesOrder.forEach(roleGroup => {
+        const playersInRole = players.filter(p => p.role === roleGroup.id);
+        
+        if (playersInRole.length > 0) {
+          // Sort Captain & VC to top of their role group
+          playersInRole.sort((a, b) => {
+            if (a.isCaptain) return -1;
+            if (b.isCaptain) return 1;
+            if (a.isViceCaptain) return -1;
+            if (b.isViceCaptain) return 1;
+            return 0;
+          });
+
+          // Create Header for this role
+          const heading = document.createElement("h3");
+          heading.style.marginTop = "20px";
+          heading.style.marginBottom = "5px";
+          heading.style.color = "var(--gold)";
+          heading.style.borderBottom = "1px solid rgba(255, 215, 0, 0.2)";
+          heading.style.paddingBottom = "5px";
+          heading.textContent = roleGroup.label;
+          list.appendChild(heading);
+
+          // Create modern grid for the players
+          const grid = document.createElement("div");
+          grid.className = "squad-role-grid";
+
+          playersInRole.forEach(player => {
+            const card = document.createElement("div");
+            card.className = "squad-card glass-panel";
+            
+            if (player.isCaptain || player.isViceCaptain) {
+                card.classList.add("leadership-highlight");
+            }
+
+            const leaderTag = player.isCaptain ? " <span style='color:var(--gold); font-weight:bold; font-size:0.85em; margin-left:5px;'>(Captain)</span>" : (player.isViceCaptain ? " <span style='color:silver; font-weight:bold; font-size:0.8em; margin-left:5px;'>(VC)</span>" : "");
+            const priceText = player.price ? player.price : "Price Pending";
+
+            card.innerHTML = `
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <div style="font-weight:bold; font-size:1.15em; color: #fff;">
+                  ${player.name}${leaderTag}
+                </div>
+              </div>
+              <div style="margin-top:8px;">
+                <span class="price-badge">${priceText}</span>
+              </div>
+            `;
+            grid.appendChild(card);
+          });
+          list.appendChild(grid);
+        }
+      });
+    };
+    filterBar.appendChild(btn);
+  });
+  
+  // Click the first one to initialize
+  filterBar.children[0].click();
 }
 
 // --- LOGIC: Login ---
@@ -388,7 +734,7 @@ function handleLogin() {
   const user = document.getElementById("username").value;
   const key = document.getElementById("password").value;
 
-  if (key === "ipl2025" || key === "") { // Allow empty for ease
+  if (key === "ipl2026" || key === "") { // Allow empty for ease
     state.user = user || "Admin";
     document.getElementById("login-screen").classList.add("hidden");
     // Forward to Retention Phase instead of Dashboard

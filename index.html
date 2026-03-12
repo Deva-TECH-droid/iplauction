@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IPL Mega Auction 2025</title>
+  <title>IPL Mega Auction 2026</title>
   <link rel="stylesheet" href="styles.css">
   <link
     href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;500;700;900&family=Rajdhani:wght@300;500;700&display=swap"
@@ -16,7 +16,7 @@
 
   <div id="login-screen" class="screen active">
     <div class="login-container glass-card">
-      <h1 class="logo-text">IPL MEGA AUCTION <span class="highlight">2025</span></h1>
+      <h1 class="logo-text">IPL MEGA AUCTION <span class="highlight">2026</span></h1>
       <p class="subtitle">Experience the thrill of the hammer</p>
 
       <form id="login-form">
@@ -24,7 +24,7 @@
           <input type="text" id="username" placeholder="Auctioneer Name" required>
         </div>
         <div class="input-group">
-          <input type="password" id="password" placeholder="Key (ipl2025)" required>
+          <input type="password" id="password" placeholder="Key (ipl2026)" required>
         </div>
         <button type="submit" class="btn-primary glow-btn">ENTER ARENA</button>
       </form>
@@ -104,6 +104,7 @@
         </div>
       </div>
       <div class="user-profile">
+        <button id="news-btn" class="btn-small glow-btn" style="margin-right: 10px; background: linear-gradient(45deg, #11998e, #38ef7d);">⭐ IPL 2026 News</button>
         <span id="user-display">DEVANSH UPADHYAY</span>
         <button id="logout-btn" class="btn-small">Logout</button>
       </div>
@@ -341,6 +342,109 @@
             <div id="info-history" class="history-list">
               <!-- Populated by JS -->
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- News Modal -->
+  <div id="news-modal" class="modal-overlay hidden">
+    <div class="modal-content glass-card" style="width: 80%; max-width: 900px; max-height: 90vh; overflow-y: auto;">
+      <div class="modal-header">
+        <h2 class="highlight">Latest IPL 2026 Updates</h2>
+        <button id="close-news-modal" class="close-btn">&times;</button>
+      </div>
+      <div class="modal-body" style="display: flex; flex-direction: column; gap: 20px;">
+        
+        <!-- Video Section -->
+        <div class="news-section glass-panel">
+          <h3>🚨 LSG New Logo & Jersey Reveal!</h3>
+          <p style="color:#aaa; font-size:0.9rem; margin-bottom:10px;">Lucknow Super Giants have unveiled their new bold red and blue look for 2026!</p>
+          <div class="video-container" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px;">
+            <!-- Using a YouTube Shorts/Video embed format -->
+            <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" 
+                src="https://www.youtube.com/embed/LdaBS3V8rLdt_EwLi" 
+                title="LSG New Jersey Reveal" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen>
+            </iframe>
+          </div>
+        </div>
+
+        <!-- Info Grid -->
+        <div class="news-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px;">
+          <div class="news-card glass-panel" style="display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <h4>📅 IPL 2026 Start Date</h4>
+              <p>The 2026 season of the Indian Premier League is expected to kick off in the <strong>last week of March 2026</strong>. Official schedule pending BCCI announcement.</p>
+            </div>
+          </div>
+          
+          <div class="news-card glass-panel" style="display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <h4>📋 Schedule & Format</h4>
+              <p>The tournament will feature 10 teams playing a total of 74 matches. The format remains the same with two virtual groups, culminating in the playoffs in late May.</p>
+            </div>
+            <button id="open-schedule-btn" class="btn-primary glow-btn" style="margin-top: 15px; width: 100%; border-radius: 20px; font-weight: bold; font-size: 1.1em; letter-spacing: 1px; padding: 12px; background: linear-gradient(135deg, #f12711 0%, #f5af19 100%); border: none; box-shadow: 0 4px 15px rgba(245, 175, 25, 0.4);">
+              🏏 View Fixtures
+            </button>
+          </div>
+
+          <div class="news-card glass-panel" style="grid-column: 1 / -1; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <h4>👥 Squad Updates</h4>
+              <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px;">
+                <span class="badge" style="background:var(--bg-dark);">PBKS: Ricky Ponting (H.C)</span>
+                <span class="badge" style="background:var(--bg-dark);">DC: Hemang Badani (H.C)</span>
+                <span class="badge" style="background:var(--bg-dark);">RR: Rahul Dravid (H.C)</span>
+                <span class="badge" style="background:var(--bg-dark);">KKR: Andre Russell (Power Coach)</span>
+                <span class="badge" style="background:var(--bg-dark);">MI: Mahela Jayawardene returns</span>
+              </div>
+              <p style="margin-top: 10px; font-size: 0.9em; color:#bbb;">All 10 franchises have finalized their support staff. Keep an eye on the dashboard for live squad updates post-auction!</p>
+            </div>
+            <button id="open-squads-btn" class="btn-primary glow-btn" style="margin-top: 15px; width: 100%; border-radius: 20px; font-weight: bold; font-size: 1.1em; letter-spacing: 1px; padding: 12px; background: linear-gradient(135deg, #0575E6 0%, #021B79 100%); border: none; box-shadow: 0 4px 15px rgba(5, 117, 230, 0.4);">
+              🛡️ View 2026 Squads
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Schedule Modal -->
+  <div id="schedule-modal" class="modal-overlay hidden">
+    <div class="modal-content glass-card" style="width: 80%; max-width: 800px; max-height: 90vh; overflow-y: auto;">
+      <div class="modal-header">
+        <h2 class="highlight">IPL 2026 Schedule (Phase 1)</h2>
+        <button id="close-schedule-modal" class="close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div id="schedule-list" style="display: flex; flex-direction: column; gap: 10px;">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Squads Modal -->
+  <div id="squads-modal" class="modal-overlay hidden">
+    <div class="modal-content glass-card" style="width: 90%; max-width: 1000px; max-height: 90vh; overflow-y: auto;">
+      <div class="modal-header">
+        <h2 class="highlight">IPL 2026 Finalized Squads</h2>
+        <button id="close-squads-modal" class="close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="filter-bar" id="squad-filter-bar" style="margin-bottom: 20px; flex-wrap: wrap;">
+          <!-- Buttons populated by JS -->
+        </div>
+        <div id="squad-display-area" class="glass-panel" style="padding: 20px;">
+          <h3 id="squad-team-name" style="margin-bottom: 5px; color: var(--gold); border-bottom: 2px solid rgba(255,215,0,0.3); padding-bottom: 10px;">Select a team</h3>
+          
+          <div id="squad-player-list" style="padding: 0; margin-top: 15px; max-height: 500px; overflow-y: auto; overflow-x: hidden; padding-right: 15px;">
+            <!-- Populated dynamically -->
           </div>
         </div>
       </div>

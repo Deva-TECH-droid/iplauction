@@ -25,7 +25,7 @@ The project demonstrates real-time application design using modern web technolog
 <h3>💰 Live Auction Room</h3>
 
 <p align="center">
-<img src="./screensorts/auction-room.png" width="900"/>
+<img src="./screensorts/biding area.png" width="900"/>
 </p>
 
 

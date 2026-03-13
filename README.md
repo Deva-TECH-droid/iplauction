@@ -1,30 +1,17 @@
-🚀 IPL Auction Platform
-<p align="center"> <img src="https://readme-typing-svg.herokuapp.com?color=FF5733&size=30&center=true&vCenter=true&width=800&lines=IPL+Auction+Simulation+Platform;Full+Stack+Web+Application;React+Node+MongoDB;Built+by+Devansh+Upadhyay"> </p>
-🏏 About the Project
+<h1>🚀 IPL Auction Platform</h1>
+<p align="center"> <img src="https://readme-typing-svg.herokuapp.com?color=FF5733&size=32&center=true&vCenter=true&width=900&lines=IPL+Auction+Simulation+Platform;Full+Stack+Web+Application;React+Node+MongoDB;Built+by+Devansh+Upadhyay"> </p>
+<h1>🏏 About The Project</h1>
 
 The IPL Auction Platform is a full-stack web application inspired by the auction system used in the Indian Premier League.
 
 This platform allows users to simulate a real auction where teams bid for players and build competitive squads within a fixed purse limit.
 
-The goal of this project is to demonstrate real-time application development using modern web technologies.
+The project demonstrates real-time application design using modern web technologies.
 
-🧑‍💻 Tech Stack
-Frontend
-<p> <img src="https://skillicons.dev/icons?i=react,redux,html,css,js,tailwind" /> </p>
-Backend
-<p> <img src="https://skillicons.dev/icons?i=nodejs,express" /> </p>
-Database
-<p> <img src="https://skillicons.dev/icons?i=mongodb" /> </p>
-DevOps & Tools
-<p> <img src="https://skillicons.dev/icons?i=git,github,vercel,vscode" /> </p>
-📸 Project Preview
+<h1>🧑‍💻 Tech Stack</h1> <h3>Frontend</h3> <p> <img src="https://skillicons.dev/icons?i=react,redux,html,css,js,tailwind" /> </p> <h3>Backend</h3> <p> <img src="https://skillicons.dev/icons?i=nodejs,express" /> </p> <h3>Database</h3> <p> <img src="https://skillicons.dev/icons?i=mongodb" /> </p> <h3>DevOps & Tools</h3> <p> <img src="https://skillicons.dev/icons?i=git,github,vercel,vscode" /> </p>
+<h1>📸 Project Preview</h1>
 
-🎥 Demo
-
-(Add a small screen recording GIF of your project)
-
-⚡ Features
-🏏 Player Auction
+<h1>⚡ Features</h1> <h3>🏏 Player Auction</h3>
 
 Live bidding system
 
@@ -32,7 +19,7 @@ Dynamic player price increase
 
 Automatic highest bidder selection
 
-👥 Team Management
+<h3>👥 Team Management</h3>
 
 Create teams
 
@@ -40,9 +27,7 @@ Manage squad players
 
 Track remaining purse
 
-📊 Player Roles
-
-Players are categorized as:
+<h3>📊 Player Roles</h3>
 
 Batsman
 
@@ -52,15 +37,7 @@ All-Rounder
 
 Wicket Keeper
 
-⚡ Real-Time Updates
-
-Instant bid updates
-
-Dynamic auction progress
-
-Player assignment to teams
-
-🏗️ System Architecture
+<h1>🏗️ System Architecture</h1>
 User Browser
       │
       ▼
@@ -74,7 +51,7 @@ MongoDB Database
       │
       ▼
 Player Auction Logic
-📂 Project Structure
+<h1>📂 Project Structure</h1>
 ipl-auction-platform
 │
 ├── client
@@ -90,7 +67,7 @@ ipl-auction-platform
 ├── screenshots
 ├── demo
 └── README.md
-⚙️ Installation
+<h1>⚙️ Installation</h1>
 
 Clone the repository
 
@@ -104,26 +81,22 @@ Install dependencies
 
 npm install
 
-Run the project
+Run project
 
 npm run dev
-🌐 Live Demo
+<h1>🌐 Live Demo</h1>
 
 🚀 https://your-project-link.vercel.app
 
-📈 GitHub Stats
-<p align="center"> <img src="https://github-readme-stats.vercel.app/api?username=Deva-TECH-droid&show_icons=true&theme=tokyonight" /> </p>
-🔥 Contribution Activity
-<p align="center"> <img src="https://github-readme-streak-stats.herokuapp.com/?user=Deva-TECH-droid&theme=tokyonight" /> </p>
-👨‍💻 Author
+<h1>👨‍💻 Author</h1>
 
 Devansh Upadhyay
 
-Full Stack Web Developer passionate about building scalable and real-world applications.
+Full Stack Web Developer
 
 GitHub
 https://github.com/Deva-TECH-droid
 
-⭐ Support
+<h1>⭐ Support</h1>
 
-If you like this project, please star the repository ⭐ and share it with others.
+If you like this project, please star the repository ⭐.

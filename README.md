@@ -13,7 +13,7 @@ The project demonstrates real-time application design using modern web technolog
 <h3>🏟 Auction Login Arena</h3>
 
 <p align="center">
-<img src="./screensorts/login.png" width="900"/>
+<img src="./screensorts/loginpage.png" width="900"/>
 </p>
 
 <h3>👥 Retention Phase</h3>

@@ -13,19 +13,19 @@ The project demonstrates real-time application design using modern web technolog
 <h3>🏟 Auction Login Arena</h3>
 
 <p align="center">
-<img src="./screenshots/login.png" width="900"/>
+<img src="./screensorts/login.png" width="900"/>
 </p>
 
 <h3>👥 Retention Phase</h3>
 
 <p align="center">
-<img src="./screenshots/retention.png" width="900"/>
+<img src="./screensorts/retention.png" width="900"/>
 </p>
 
 <h3>💰 Live Auction Room</h3>
 
 <p align="center">
-<img src="./screenshots/auction-room.png" width="900"/>
+<img src="./screensorts/auction-room.png" width="900"/>
 </p>
 
 

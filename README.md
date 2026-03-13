@@ -10,6 +10,24 @@ The project demonstrates real-time application design using modern web technolog
 
 <h1>🧑‍💻 Tech Stack</h1> <h3>Frontend</h3> <p> <img src="https://skillicons.dev/icons?i=react,redux,html,css,js,tailwind" /> </p> <h3>Backend</h3> <p> <img src="https://skillicons.dev/icons?i=nodejs,express" /> </p> <h3>Database</h3> <p> <img src="https://skillicons.dev/icons?i=mongodb" /> </p> <h3>DevOps & Tools</h3> <p> <img src="https://skillicons.dev/icons?i=git,github,vercel,vscode" /> </p>
 <h1>📸 Project Preview</h1>
+<h3>🏟 Auction Login Arena</h3>
+
+<p align="center">
+<img src="./screenshots/login.png" width="900"/>
+</p>
+
+<h3>👥 Retention Phase</h3>
+
+<p align="center">
+<img src="./screenshots/retention.png" width="900"/>
+</p>
+
+<h3>💰 Live Auction Room</h3>
+
+<p align="center">
+<img src="./screenshots/auction-room.png" width="900"/>
+</p>
+
 
 <h1>⚡ Features</h1> <h3>🏏 Player Auction</h3>
 

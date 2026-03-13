@@ -19,7 +19,7 @@ The project demonstrates real-time application design using modern web technolog
 <h3>👥 Retention Phase</h3>
 
 <p align="center">
-<img src="./screensorts/retention.png" width="900"/>
+<img src="./screensorts/retention phase.png" width="900"/>
 </p>
 
 <h3>💰 Live Auction Room</h3>

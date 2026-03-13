@@ -1,5 +1,5 @@
 <h1>🚀 IPL Auction Platform</h1>
-<p align="center"> <img src="https://readme-typing-svg.herokuapp.com?color=FF5733&size=32&center=true&vCenter=true&width=900&lines=IPL+Auction+Simulation+Platform;Full+Stack+Web+Application;React+Node+MongoDB;Built+by+Devansh+Upadhyay"> </p>
+<p align="center"> <img src="https://readme-typing-svg.herokuapp.com?color=FF5733&size=32&center=true&vCenter=true&width=900&lines=IPL+Auction+Simulation+Platform;AI+Web+Application;HTML+CSS+JAVASCRIPT;Built+by+Devansh+Upadhyay"> </p>
 <h1>🏏 About The Project</h1>
 
 The IPL Auction Platform is a full-stack web application inspired by the auction system used in the Indian Premier League.
